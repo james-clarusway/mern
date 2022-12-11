@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+    backend:
+        build: 
+          context: ./backend 
+        restart: always
+        ports:
+            - "5000:5000"
+        networks:
+            - clarusnet
+    frontend:
+        build: ./frontend/
+        restart: always
+        depends_on:
+            - backend
+        ports:
+            - "3000:3000"
+        networks:
+            - clarusnet
+
+networks:
+    clarusnet:
+        driver: bridge
