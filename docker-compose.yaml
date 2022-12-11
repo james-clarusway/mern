@@ -1,16 +1,20 @@
 version: "3.7"
 
 services:
-    database:
+    db:
         image: mongo:6.0.3
         ports:
           - "27017:27017"
+        networks:
+            - clarusnet
+        volumes:
+            - db-data:/data/db   
     backend:
         build: 
           context: ./backend 
         restart: always
         depends_on:
-            - database
+            - db
         ports:
             - "5000:5000"
         networks:
@@ -28,3 +32,6 @@ services:
 networks:
     clarusnet:
         driver: bridge
+
+volumes:
+    db-data:
